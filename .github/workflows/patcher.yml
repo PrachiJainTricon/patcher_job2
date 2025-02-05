@@ -27,16 +27,18 @@ jobs:
         run: |
           cp -r patcher_job1/* patcher_job2/ # Adjust this command based on what you want to copy
 
-      # Step 4: Commit and push changes to Repo B (optional)
+ # Step 4: Commit and Push Changes using PAT
       - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Use your secret here
         run: |
-          cd patcher_job2
-          git config --global user.name "PrachiJainTricon"
-          git config --global user.email "prachi.jain@triconinfotech.com"
+          cd repo_b
+          git config --global user.name "Your Name" # Replace with your name
+          git config --global user.email "your_email@example.com" # Replace with your email
           git add .
           if ! git diff-index --quiet HEAD; then
             git commit -m "Sync changes from Repo A"
-            git push origin main # Replace 'main' with your branch name if needed
+            git push https://x-access-token:${GITHUB_TOKEN}@github.com/PrachiJainTricon/patcher_job2.git main # Replace 'main' with your branch name if needed
           else
             echo "No changes to commit."
           fi
