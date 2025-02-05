@@ -25,8 +25,7 @@ jobs:
       # Step 3: Apply patches from Repo A to Repo B
       - name: Apply Patches
         run: |
-          cd patcher_job2
-          git apply ../patcher_job1/patches/Helllo.txt # Adjust the path to your patches
+          cp -r patcher_job1/* patcher_job2/ # Adjust this command based on what you want to copy
 
       # Step 4: Commit and push changes to Repo B (optional)
       - name: Commit and Push Changes
@@ -35,5 +34,9 @@ jobs:
           git config --global user.name "PrachiJainTricon"
           git config --global user.email "prachi.jain@triconinfotech.com"
           git add .
-          git commit -m "Applied patches from patcher_job1"
-          git push origin main # Replace 'main' with your branch name
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Sync changes from Repo A"
+            git push origin main # Replace 'main' with your branch name if needed
+          else
+            echo "No changes to commit."
+          fi
