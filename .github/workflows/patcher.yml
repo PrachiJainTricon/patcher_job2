@@ -1,0 +1,39 @@
+name: Patch Repo B with Patches from Repo A
+
+on:
+  workflow_dispatch: # Manually trigger the workflow
+
+jobs:
+  apply-patches:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out Repo A (the repository with patches)
+      - name: Checkout patcher_job1
+        uses: actions/checkout@v3
+        with:
+          repository: PrachiJainTricon/patcher_job1 # Replace with the owner and name of Repo A
+          path: patcher_job1
+
+      # Step 2: Check out Repo B (the repository to apply patches to)
+      - name: Checkout patcher_job2
+        uses: actions/checkout@v3
+        with:
+          repository: PrachiJainTricon/patcher_job2 # Replace with the owner and name of Repo B
+          path: patcher_job2
+
+      # Step 3: Apply patches from Repo A to Repo B
+      - name: Apply Patches
+        run: |
+          cd patcher_job2
+          git apply ../patcher_job1/patches/*.patch # Adjust the path to your patches
+
+      # Step 4: Commit and push changes to Repo B (optional)
+      - name: Commit and Push Changes
+        run: |
+          cd patcher_job2
+          git config --global user.name "PrachiJainTricon"
+          git config --global user.email "prachi.jain@triconinfotech.com"
+          git add .
+          git commit -m "Applied patches from patcher_job1"
+          git push origin main # Replace 'main' with your branch name
