@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out Repo A (the repository with patches)
+      # Step 1: Check out Repo A 
       - name: Checkout patcher_job1
         uses: actions/checkout@v3
         with:
