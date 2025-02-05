@@ -26,7 +26,7 @@ jobs:
       - name: Apply Patches
         run: |
           cd patcher_job2
-          git apply ../patcher_job1/patches/*.patch # Adjust the path to your patches
+          git apply ../patcher_job1/patches/*.txt # Adjust the path to your patches
 
       # Step 4: Commit and push changes to Repo B (optional)
       - name: Commit and Push Changes
